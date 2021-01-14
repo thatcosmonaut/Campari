@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Campari", "Campari.csproj", "{55485ED3-E08A-4827-B7CF-5028287D4AE3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RefreshCS", "lib\RefreshCS\RefreshCS.csproj", "{2EFA491B-EDAF-4983-A3E4-A24D014E4B6E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55485ED3-E08A-4827-B7CF-5028287D4AE3}.Debug|x64.ActiveCfg = Debug|x64
+		{55485ED3-E08A-4827-B7CF-5028287D4AE3}.Debug|x64.Build.0 = Debug|x64
+		{55485ED3-E08A-4827-B7CF-5028287D4AE3}.Release|x64.ActiveCfg = Release|x64
+		{55485ED3-E08A-4827-B7CF-5028287D4AE3}.Release|x64.Build.0 = Release|x64
+		{2EFA491B-EDAF-4983-A3E4-A24D014E4B6E}.Debug|x64.ActiveCfg = Debug|x64
+		{2EFA491B-EDAF-4983-A3E4-A24D014E4B6E}.Debug|x64.Build.0 = Debug|x64
+		{2EFA491B-EDAF-4983-A3E4-A24D014E4B6E}.Release|x64.ActiveCfg = Release|x64
+		{2EFA491B-EDAF-4983-A3E4-A24D014E4B6E}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F656977-F01D-4BBD-9E72-0FD6CD077717}
+	EndGlobalSection
+EndGlobal
