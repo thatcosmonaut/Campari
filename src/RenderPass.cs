@@ -24,7 +24,7 @@ namespace Campari
             RefreshDevice device,
             Refresh.DepthStencilTargetDescription depthStencilTargetDescription,
             params Refresh.ColorTargetDescription[] colorTargetDescriptions
-        ) : base(device) 
+        ) : base(device)
         {
             Refresh.DepthStencilTargetDescription* depthStencilPtr = &depthStencilTargetDescription;
 
