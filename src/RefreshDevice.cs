@@ -18,7 +18,7 @@ namespace Campari
         ) {
             Handle = Refresh.Refresh_CreateDevice(
                 ref presentationParameters,
-                (byte) (debugMode ? 1 : 0)
+                Conversions.BoolToByte(debugMode)
             );
         }
 
@@ -29,17 +29,20 @@ namespace Campari
             return new CommandBuffer(this, commandBufferHandle);
         }
 
-        public void Submit(CommandBuffer[] commandBuffers)
+        public unsafe void Submit(params CommandBuffer[] commandBuffers)
         {
-            var commandBufferHandle = GCHandle.Alloc(commandBuffers, GCHandleType.Pinned);
+            var commandBufferPtrs = stackalloc IntPtr[commandBuffers.Length];
+
+            for (var i = 0; i < commandBuffers.Length; i += 1)
+            {
+                commandBufferPtrs[i] = commandBuffers[i].Handle;
+            }
 
             Refresh.Refresh_Submit(
                 Handle,
                 (uint) commandBuffers.Length,
-                commandBufferHandle.AddrOfPinnedObject()
+                (IntPtr) commandBufferPtrs
             );
-
-            commandBufferHandle.Free();
         }
 
         protected virtual void Dispose(bool disposing)

@@ -12,8 +12,8 @@ namespace Campari
             RefreshDevice device,
             ColorBlendState colorBlendState,
             DepthStencilState depthStencilState,
-            ShaderStageState fragmentShaderState,
             ShaderStageState vertexShaderState,
+            ShaderStageState fragmentShaderState,
             MultisampleState multisampleState,
             GraphicsPipelineLayoutCreateInfo pipelineLayoutCreateInfo,
             RasterizerState rasterizerState,
@@ -34,7 +34,7 @@ namespace Campari
             graphicsPipelineCreateInfo.colorBlendState.logicOpEnable = Conversions.BoolToByte(colorBlendState.LogicOpEnable);
             graphicsPipelineCreateInfo.colorBlendState.logicOp = colorBlendState.LogicOp;
             graphicsPipelineCreateInfo.colorBlendState.blendStates = blendStateHandle.AddrOfPinnedObject();
-            graphicsPipelineCreateInfo.colorBlendState.blendStateCount = colorBlendState.BlendStateCount;
+            graphicsPipelineCreateInfo.colorBlendState.blendStateCount = (uint) colorBlendState.ColorTargetBlendStates.Length;
             graphicsPipelineCreateInfo.colorBlendState.blendConstants[0] = colorBlendState.BlendConstants.R;
             graphicsPipelineCreateInfo.colorBlendState.blendConstants[1] = colorBlendState.BlendConstants.G;
             graphicsPipelineCreateInfo.colorBlendState.blendConstants[2] = colorBlendState.BlendConstants.B;
@@ -75,14 +75,14 @@ namespace Campari
             graphicsPipelineCreateInfo.rasterizerState.lineWidth = rasterizerState.LineWidth;
 
             graphicsPipelineCreateInfo.vertexInputState.vertexAttributes = vertexAttributesHandle.AddrOfPinnedObject();
-            graphicsPipelineCreateInfo.vertexInputState.vertexAttributeCount = vertexInputState.VertexAttributeCount;
+            graphicsPipelineCreateInfo.vertexInputState.vertexAttributeCount = (uint) vertexInputState.VertexAttributes.Length;
             graphicsPipelineCreateInfo.vertexInputState.vertexBindings = vertexBindingsHandle.AddrOfPinnedObject();
-            graphicsPipelineCreateInfo.vertexInputState.vertexBindingCount = vertexInputState.VertexBindingCount;
+            graphicsPipelineCreateInfo.vertexInputState.vertexBindingCount = (uint) vertexInputState.VertexBindings.Length;
 
             graphicsPipelineCreateInfo.viewportState.viewports = viewportHandle.AddrOfPinnedObject();
-            graphicsPipelineCreateInfo.viewportState.viewportCount = viewportState.ViewportCount;
+            graphicsPipelineCreateInfo.viewportState.viewportCount = (uint) viewportState.Viewports.Length;
             graphicsPipelineCreateInfo.viewportState.scissors = scissorHandle.AddrOfPinnedObject();
-            graphicsPipelineCreateInfo.viewportState.scissorCount = viewportState.ScissorCount;
+            graphicsPipelineCreateInfo.viewportState.scissorCount = (uint) viewportState.Scissors.Length;
 
             graphicsPipelineCreateInfo.primitiveType = primitiveType;
             graphicsPipelineCreateInfo.renderPass = renderPass.Handle;

@@ -6,8 +6,8 @@ namespace Campari
 {
     public class Texture : GraphicsResource
     {
-        public uint Height { get; }
         public uint Width { get; }
+        public uint Height { get; }
         public Refresh.ColorFormat Format { get; }
 
         protected override Action<IntPtr, IntPtr> QueueDestroyFunction => Refresh.Refresh_QueueDestroyTexture;
@@ -47,6 +47,8 @@ namespace Campari
             );
 
             Format = textureCreateInfo.format;
+            Width = textureCreateInfo.width;
+            Height = textureCreateInfo.height;
         }
 
         public void SetData(IntPtr data, uint dataLengthInBytes)

@@ -4,9 +4,7 @@ namespace Campari
 {
     public struct ViewportState
     {
-        public Viewport[] Viewports;
-        public uint ViewportCount;
+        public Refresh.Viewport[] Viewports;
         public Refresh.Rect[] Scissors;
-        public uint ScissorCount;
     }
 }

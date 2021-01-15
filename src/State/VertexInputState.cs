@@ -1,10 +1,10 @@
+using RefreshCS;
+
 namespace Campari
 {
     public struct VertexInputState
     {
-        public VertexBinding[] VertexBindings;
-        public uint VertexBindingCount;
-        public VertexAttribute[] VertexAttributes;
-        public uint VertexAttributeCount;
+        public Refresh.VertexBinding[] VertexBindings;
+        public Refresh.VertexAttribute[] VertexAttributes;
     }
 }
