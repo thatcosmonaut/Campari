@@ -7,7 +7,10 @@ namespace Campari
     {
         protected override Action<IntPtr, IntPtr> QueueDestroyFunction => Refresh.Refresh_QueueDestroyRenderPass;
 
-        public unsafe RenderPass(RefreshDevice device, params Refresh.ColorTargetDescription[] colorTargetDescriptions) : base(device)
+        public unsafe RenderPass(
+            RefreshDevice device,
+            params Refresh.ColorTargetDescription[] colorTargetDescriptions
+        ) : base(device)
         {
             fixed (Refresh.ColorTargetDescription* ptr = colorTargetDescriptions)
             {

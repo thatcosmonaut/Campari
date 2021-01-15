@@ -3,7 +3,7 @@ using RefreshCS;
 
 namespace Campari
 {
-    class DepthStencilTarget : GraphicsResource
+    public class DepthStencilTarget : GraphicsResource
     {
         public uint Width { get; }
         public uint Height { get; }

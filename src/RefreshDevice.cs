@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using RefreshCS;
 
@@ -16,9 +17,29 @@ namespace Campari
             bool debugMode
         ) {
             Handle = Refresh.Refresh_CreateDevice(
-                ref presentationParameters, 
+                ref presentationParameters,
                 (byte) (debugMode ? 1 : 0)
             );
+        }
+
+        /* FIXME: pool this */
+        public CommandBuffer AcquireCommandBuffer()
+        {
+            var commandBufferHandle = Refresh.Refresh_AcquireCommandBuffer(Handle, 0);
+            return new CommandBuffer(this, commandBufferHandle);
+        }
+
+        public void Submit(CommandBuffer[] commandBuffers)
+        {
+            var commandBufferHandle = GCHandle.Alloc(commandBuffers, GCHandleType.Pinned);
+
+            Refresh.Refresh_Submit(
+                Handle,
+                (uint) commandBuffers.Length,
+                commandBufferHandle.AddrOfPinnedObject()
+            );
+
+            commandBufferHandle.Free();
         }
 
         protected virtual void Dispose(bool disposing)
