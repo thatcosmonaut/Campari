@@ -37,5 +37,22 @@ namespace Campari
                 );
             }
         }
+
+        // NOTE: You want to wait on the device before calling this
+        public unsafe void GetData<T>(
+            T[] data,
+            uint dataLengthInBytes
+        ) where T : unmanaged
+        {
+            fixed (T* ptr = &data[0])
+            {
+                Refresh.Refresh_GetBufferData(
+                    Device.Handle,
+                    Handle,
+                    (IntPtr)ptr,
+                    dataLengthInBytes
+                );
+            }
+        }
     }
 }

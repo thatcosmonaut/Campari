@@ -10,7 +10,7 @@ namespace Campari
 
         public bool IsDisposed { get; private set; }
 
-        private Queue<CommandBuffer> commandBufferPool;
+        private readonly Queue<CommandBuffer> commandBufferPool;
 
         public GraphicsDevice(
             IntPtr deviceWindowHandle,
@@ -71,6 +71,11 @@ namespace Campari
                 commandBuffers[i].Handle = IntPtr.Zero;
                 commandBufferPool.Enqueue(commandBuffers[i]);
             }
+        }
+
+        public void Wait()
+        {
+            Refresh.Refresh_Wait(Handle);
         }
 
         protected virtual void Dispose(bool disposing)
