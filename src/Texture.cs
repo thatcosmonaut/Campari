@@ -39,6 +39,14 @@ namespace Campari
             return texture;
         }
 
+        public unsafe static void SavePNG(string path, int width, int height, byte[] pixels)
+        {
+            fixed (byte* ptr = &pixels[0])
+            {
+                Refresh.Refresh_Image_SavePNG(path, width, height, (IntPtr) ptr);
+            }
+        }
+
         public static Texture CreateTexture2D(
             GraphicsDevice device,
             uint width,
