@@ -4,16 +4,16 @@ using RefreshCS;
 
 namespace Campari
 {
-    public struct CommandBuffer
+    public class CommandBuffer
     {
         public GraphicsDevice Device { get; }
-        public IntPtr Handle { get; }
+        public IntPtr Handle { get; internal set; }
 
         // called from RefreshDevice
-        internal CommandBuffer(GraphicsDevice device, IntPtr handle)
+        internal CommandBuffer(GraphicsDevice device)
         {
             Device = device;
-            Handle = handle;
+            Handle = IntPtr.Zero;
         }
 
         public void BeginRenderPass(
