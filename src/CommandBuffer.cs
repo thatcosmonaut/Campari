@@ -16,50 +16,47 @@ namespace Campari
             Handle = IntPtr.Zero;
         }
 
-        public void BeginRenderPass(
+        public unsafe void BeginRenderPass(
             RenderPass renderPass,
             Framebuffer framebuffer,
             ref Refresh.Rect renderArea,
-            Refresh.Color[] clearColors,
-            ref Refresh.DepthStencilValue depthStencilClearValue
+            ref Refresh.DepthStencilValue depthStencilClearValue,
+            params Refresh.Color[] clearColors
         ) {
-            var clearColorHandle = GCHandle.Alloc(clearColors, GCHandleType.Pinned);
-
-            Refresh.Refresh_BeginRenderPass(
-                Device.Handle,
-                Handle,
-                renderPass.Handle,
-                framebuffer.Handle,
-                ref renderArea,
-                clearColorHandle.AddrOfPinnedObject(),
-                (uint) clearColors.Length,
-                ref depthStencilClearValue
-            );
-
-            clearColorHandle.Free();
+            fixed (Refresh.Color* clearColorPtr = &clearColors[0])
+            {
+                Refresh.Refresh_BeginRenderPass(
+                    Device.Handle,
+                    Handle,
+                    renderPass.Handle,
+                    framebuffer.Handle,
+                    ref renderArea,
+                    (IntPtr) clearColorPtr,
+                    (uint)clearColors.Length,
+                    ref depthStencilClearValue
+                );
+            }
         }
 
-        public void BeginRenderPass(
+        public unsafe void BeginRenderPass(
             RenderPass renderPass,
             Framebuffer framebuffer,
             ref Refresh.Rect renderArea,
-            Refresh.Color[] clearColors
+            params Refresh.Color[] clearColors
         ) {
-            var clearColorHandle = GCHandle.Alloc(clearColors, GCHandleType.Pinned);
-
-            Refresh.Refresh_BeginRenderPass(
-                Device.Handle,
-                Handle,
-                renderPass.Handle,
-                framebuffer.Handle,
-                ref renderArea,
-                clearColorHandle.AddrOfPinnedObject(),
-                (uint) clearColors.Length,
-                IntPtr.Zero
-            );
-
-            clearColorHandle.Free();
-
+            fixed (Refresh.Color* clearColorPtr = &clearColors[0])
+            {
+                Refresh.Refresh_BeginRenderPass(
+                    Device.Handle,
+                    Handle,
+                    renderPass.Handle,
+                    framebuffer.Handle,
+                    ref renderArea,
+                    (IntPtr) clearColorPtr,
+                    (uint) clearColors.Length,
+                    IntPtr.Zero
+                );
+            }
         }
 
         public void BindComputePipeline(
@@ -74,7 +71,7 @@ namespace Campari
 
         public unsafe uint PushComputeShaderParams<T>(
             params T[] uniforms
-        ) where T : unmanaged 
+        ) where T : unmanaged
         {
             fixed (T* ptr = &uniforms[0])
             {
@@ -163,28 +160,25 @@ namespace Campari
 
         public unsafe void BindVertexBuffers(
             uint firstBinding,
-            uint bindingCount,
-            Buffer[] buffers,
-            UInt64[] offsets
+            params BufferBinding[] bufferBindings
         ) {
-            var bufferPtrs = stackalloc IntPtr[buffers.Length];
+            var bufferPtrs = stackalloc IntPtr[bufferBindings.Length];
+            var offsets = stackalloc ulong[bufferBindings.Length];
 
-            for (var i = 0; i < buffers.Length; i += 1)
+            for (var i = 0; i < bufferBindings.Length; i += 1)
             {
-                bufferPtrs[i] = buffers[i].Handle;
+                bufferPtrs[i] = bufferBindings[i].Buffer.Handle;
+                offsets[i] = bufferBindings[i].Offset;
             }
-            var offsetHandle = GCHandle.Alloc(offsets, GCHandleType.Pinned);
 
             Refresh.Refresh_BindVertexBuffers(
                 Device.Handle,
                 Handle,
                 firstBinding,
-                bindingCount,
+                (uint) bufferBindings.Length,
                 (IntPtr) bufferPtrs,
-                offsetHandle.AddrOfPinnedObject()
+                (IntPtr) offsets
             );
-
-            offsetHandle.Free();
         }
 
         public void BindIndexBuffer(
@@ -227,20 +221,15 @@ namespace Campari
         }
 
         public unsafe void BindFragmentSamplers(
-            Texture[] textures,
-            Sampler[] samplers
+            params TextureSamplerBinding[] textureSamplerBindings
         ) {
-            var texturePtrs = stackalloc IntPtr[textures.Length];
-            var samplerPtrs = stackalloc IntPtr[samplers.Length];
+            var texturePtrs = stackalloc IntPtr[textureSamplerBindings.Length];
+            var samplerPtrs = stackalloc IntPtr[textureSamplerBindings.Length];
 
-            for (var i = 0; i < textures.Length; i += 1)
+            for (var i = 0; i < textureSamplerBindings.Length; i += 1)
             {
-                texturePtrs[i] = textures[i].Handle;
-            }
-
-            for (var i = 0; i < samplers.Length; i += 1)
-            {
-                samplerPtrs[i] = samplers[i].Handle;
+                texturePtrs[i] = textureSamplerBindings[i].Texture.Handle;
+                samplerPtrs[i] = textureSamplerBindings[i].Sampler.Handle;
             }
 
             Refresh.Refresh_BindFragmentSamplers(
