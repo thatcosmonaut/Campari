@@ -12,7 +12,7 @@ namespace Campari
 
         protected override Action<IntPtr, IntPtr> QueueDestroyFunction => Refresh.Refresh_QueueDestroyTexture;
 
-        public static Texture LoadPNG(RefreshDevice device, FileInfo fileInfo)
+        public static Texture LoadPNG(GraphicsDevice device, FileInfo fileInfo)
         {
             var pixels = Refresh.Refresh_Image_Load(
                 fileInfo.FullName,
@@ -40,7 +40,7 @@ namespace Campari
         }
 
         public static Texture CreateTexture2D(
-            RefreshDevice device,
+            GraphicsDevice device,
             uint width,
             uint height,
             Refresh.ColorFormat format,
@@ -65,7 +65,7 @@ namespace Campari
         }
 
         public static Texture CreateTexture3D(
-            RefreshDevice device,
+            GraphicsDevice device,
             uint width,
             uint height,
             uint depth,
@@ -91,7 +91,7 @@ namespace Campari
         }
 
         public static Texture CreateTextureCube(
-            RefreshDevice device,
+            GraphicsDevice device,
             uint size,
             Refresh.ColorFormat format,
             Refresh.TextureUsageFlags usageFlags,
@@ -114,7 +114,7 @@ namespace Campari
             return new Texture(device, ref textureCreateInfo);
         }
 
-        public Texture(RefreshDevice device, ref Campari.TextureCreateInfo textureCreateInfo) : base(device)
+        public Texture(GraphicsDevice device, ref Campari.TextureCreateInfo textureCreateInfo) : base(device)
         {
             var refreshTextureCreateInfo = textureCreateInfo.ToRefreshTextureCreateInfo();
 

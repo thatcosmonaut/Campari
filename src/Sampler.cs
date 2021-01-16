@@ -8,7 +8,7 @@ namespace Campari
         protected override Action<IntPtr, IntPtr> QueueDestroyFunction => Refresh.Refresh_QueueDestroySampler;
 
         public Sampler(
-            RefreshDevice device,
+            GraphicsDevice device,
             ref SamplerState samplerState
         ) : base(device)
         {

@@ -8,7 +8,7 @@ namespace Campari
     {
         protected override Action<IntPtr, IntPtr> QueueDestroyFunction => Refresh.Refresh_QueueDestroyShaderModule;
 
-        public unsafe ShaderModule(RefreshDevice device, FileInfo fileInfo) : base(device)
+        public unsafe ShaderModule(GraphicsDevice device, FileInfo fileInfo) : base(device)
         {
             fixed (uint* ptr = Bytecode.ReadBytecode(fileInfo))
             {

@@ -6,11 +6,11 @@ namespace Campari
 {
     public struct CommandBuffer
     {
-        public RefreshDevice Device { get; }
+        public GraphicsDevice Device { get; }
         public IntPtr Handle { get; }
 
         // called from RefreshDevice
-        internal CommandBuffer(RefreshDevice device, IntPtr handle)
+        internal CommandBuffer(GraphicsDevice device, IntPtr handle)
         {
             Device = device;
             Handle = handle;

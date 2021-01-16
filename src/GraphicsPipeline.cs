@@ -9,7 +9,7 @@ namespace Campari
         protected override Action<IntPtr, IntPtr> QueueDestroyFunction => Refresh.Refresh_QueueDestroyGraphicsPipeline;
 
         public unsafe GraphicsPipeline(
-            RefreshDevice device,
+            GraphicsDevice device,
             ColorBlendState colorBlendState,
             DepthStencilState depthStencilState,
             ShaderStageState vertexShaderState,

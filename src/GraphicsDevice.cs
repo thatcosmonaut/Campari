@@ -6,16 +6,23 @@ using RefreshCS;
 
 namespace Campari
 {
-    public class RefreshDevice : IDisposable
+    public class GraphicsDevice : IDisposable
     {
         public IntPtr Handle { get; }
 
         public bool IsDisposed { get; private set; }
 
-        public RefreshDevice(
-            Refresh.PresentationParameters presentationParameters,
+        public GraphicsDevice(
+            IntPtr deviceWindowHandle,
+            Refresh.PresentMode presentMode,
             bool debugMode
         ) {
+            var presentationParameters = new Refresh.PresentationParameters
+            {
+                deviceWindowHandle = deviceWindowHandle,
+                presentMode = presentMode
+            };
+
             Handle = Refresh.Refresh_CreateDevice(
                 ref presentationParameters,
                 Conversions.BoolToByte(debugMode)
@@ -60,7 +67,7 @@ namespace Campari
         }
 
         // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        ~RefreshDevice()
+        ~GraphicsDevice()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: false);

@@ -8,7 +8,7 @@ namespace Campari
         protected override Action<IntPtr, IntPtr> QueueDestroyFunction => Refresh.Refresh_QueueDestroyBuffer;
 
         public Buffer(
-            RefreshDevice device, 
+            GraphicsDevice device, 
             Refresh.BufferUsageFlags usageFlags,
             uint sizeInBytes
         ) : base(device)

@@ -6,13 +6,13 @@ namespace Campari
 {
     public abstract class GraphicsResource : IDisposable
     {
-        public RefreshDevice Device { get; }
+        public GraphicsDevice Device { get; }
         public IntPtr Handle { get; protected set; }
 
         public bool IsDisposed { get; private set; }
         protected abstract Action<IntPtr, IntPtr> QueueDestroyFunction { get; }
 
-        public GraphicsResource(RefreshDevice device)
+        public GraphicsResource(GraphicsDevice device)
         {
             Device = device;
         }

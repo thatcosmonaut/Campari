@@ -8,7 +8,7 @@ namespace Campari
         protected override Action<IntPtr, IntPtr> QueueDestroyFunction => Refresh.Refresh_QueueDestroyFramebuffer;
 
         public unsafe Framebuffer(
-            RefreshDevice device,
+            GraphicsDevice device,
             uint width,
             uint height,
             RenderPass renderPass,

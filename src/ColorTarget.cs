@@ -13,7 +13,7 @@ namespace Campari
 
         protected override Action<IntPtr, IntPtr> QueueDestroyFunction => Refresh.Refresh_QueueDestroyColorTarget;
 
-        public ColorTarget(RefreshDevice device, Refresh.SampleCount sampleCount, ref TextureSlice textureSlice) : base(device)
+        public ColorTarget(GraphicsDevice device, Refresh.SampleCount sampleCount, ref TextureSlice textureSlice) : base(device)
         {
             var refreshTextureSlice = textureSlice.ToRefreshTextureSlice();
             Handle = Refresh.Refresh_CreateColorTarget(device.Handle, sampleCount, ref refreshTextureSlice);
