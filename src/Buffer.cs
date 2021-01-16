@@ -7,8 +7,11 @@ namespace Campari
     {
         protected override Action<IntPtr, IntPtr> QueueDestroyFunction => Refresh.Refresh_QueueDestroyBuffer;
 
-        /* FIXME: could we have a special flags struct? */
-        public Buffer(RefreshDevice device, uint usageFlags, uint sizeInBytes) : base(device)
+        public Buffer(
+            RefreshDevice device, 
+            Refresh.BufferUsageFlags usageFlags,
+            uint sizeInBytes
+        ) : base(device)
         {
             Handle = Refresh.Refresh_CreateBuffer(
                 device.Handle,

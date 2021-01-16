@@ -23,17 +23,23 @@ namespace Campari
             RenderPass renderPass
         ) : base(device)
         {
-            var blendStateHandle = GCHandle.Alloc(colorBlendState.ColorTargetBlendStates, GCHandleType.Pinned);
             var vertexAttributesHandle = GCHandle.Alloc(vertexInputState.VertexAttributes, GCHandleType.Pinned);
             var vertexBindingsHandle = GCHandle.Alloc(vertexInputState.VertexBindings, GCHandleType.Pinned);
             var viewportHandle = GCHandle.Alloc(viewportState.Viewports, GCHandleType.Pinned);
             var scissorHandle = GCHandle.Alloc(viewportState.Scissors, GCHandleType.Pinned);
 
+            var colorTargetBlendStates = stackalloc Refresh.ColorTargetBlendState[colorBlendState.ColorTargetBlendStates.Length];
+
+            for (var i = 0; i < colorBlendState.ColorTargetBlendStates.Length; i += 1)
+            {
+                colorTargetBlendStates[i] = colorBlendState.ColorTargetBlendStates[i].ToRefreshColorTargetBlendState();
+            }
+
             Refresh.GraphicsPipelineCreateInfo graphicsPipelineCreateInfo;
 
             graphicsPipelineCreateInfo.colorBlendState.logicOpEnable = Conversions.BoolToByte(colorBlendState.LogicOpEnable);
             graphicsPipelineCreateInfo.colorBlendState.logicOp = colorBlendState.LogicOp;
-            graphicsPipelineCreateInfo.colorBlendState.blendStates = blendStateHandle.AddrOfPinnedObject();
+            graphicsPipelineCreateInfo.colorBlendState.blendStates = (IntPtr) colorTargetBlendStates;
             graphicsPipelineCreateInfo.colorBlendState.blendStateCount = (uint) colorBlendState.ColorTargetBlendStates.Length;
             graphicsPipelineCreateInfo.colorBlendState.blendConstants[0] = colorBlendState.BlendConstants.R;
             graphicsPipelineCreateInfo.colorBlendState.blendConstants[1] = colorBlendState.BlendConstants.G;
@@ -89,7 +95,6 @@ namespace Campari
 
             Handle = Refresh.Refresh_CreateGraphicsPipeline(device.Handle, ref graphicsPipelineCreateInfo);
 
-            blendStateHandle.Free();
             vertexAttributesHandle.Free();
             vertexBindingsHandle.Free();
             viewportHandle.Free();

@@ -7,6 +7,6 @@ namespace Campari
         public bool LogicOpEnable;
         public Refresh.LogicOp LogicOp;
         public BlendConstants BlendConstants;
-        public Refresh.ColorTargetBlendState[] ColorTargetBlendStates;
+        public ColorTargetBlendState[] ColorTargetBlendStates;
     }
 }

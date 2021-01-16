@@ -9,10 +9,15 @@ namespace Campari
 
         public Sampler(
             RefreshDevice device,
-            ref Refresh.SamplerStateCreateInfo samplerStateCreateInfo
+            ref SamplerState samplerState
         ) : base(device)
         {
-            Handle = Refresh.Refresh_CreateSampler(device.Handle, ref samplerStateCreateInfo);
+            var refreshSamplerStateCreateInfo = samplerState.ToRefreshSamplerStateCreateInfo();
+
+            Handle = Refresh.Refresh_CreateSampler(
+                device.Handle,
+                ref refreshSamplerStateCreateInfo
+            );
         }
     }
 }
