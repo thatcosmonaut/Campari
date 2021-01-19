@@ -1,6 +1,6 @@
 # Campari
 
-Campari is a convenience wrapper around the [RefreshCS](https://github.com/thatcosmonaut/RefreshCS) interop library for the Refresh graphics system.
+Campari is a convenience wrapper around the [RefreshCS](https://gitea.moonside.games/MoonsideGames/RefreshCS) interop library for the [Refresh](https://gitea.moonside.games/MoonsideGames/Refresh) graphics system.
 
 ## License
 
