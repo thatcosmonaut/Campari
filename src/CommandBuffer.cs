@@ -352,6 +352,34 @@ namespace Campari
             );
         }
 
+        public void QueuePresent(
+            Texture texture,
+            Refresh.Filter filter
+        ) {
+            var refreshTextureSlice = new Refresh.TextureSlice
+            {
+                texture = texture.Handle,
+                rectangle = new Refresh.Rect
+                {
+                    x = 0,
+                    y = 0,
+                    w = (int) texture.Width,
+                    h = (int) texture.Height
+                },
+                layer = 0,
+                level = 0,
+                depth = 0
+            };
+
+            Refresh.Refresh_QueuePresent(
+                Device.Handle,
+                Handle,
+                ref refreshTextureSlice,
+                IntPtr.Zero,
+                filter
+            );
+        }
+
         public void CopyTextureToTexture(
             ref TextureSlice sourceTextureSlice,
             ref TextureSlice destinationTextureSlice,
